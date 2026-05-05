@@ -19,39 +19,58 @@ document.addEventListener("DOMContentLoaded", () => {
     const frameCount = 605; // Total de frames extraídos do ffmpeg
     const currentFrame = (index) => `assets/frames/frame_${index.toString().padStart(4, '0')}.jpg`;
 
+    // Sessão 5
+    const frameCount5 = 242;
+    const currentFrame5 = (index) => `assets/frames_s5/frame_${index.toString().padStart(4, '0')}.jpg`;
+
     const images = [];
+    const images5 = [];
     
     // Objeto que o GSAP vai animar (a propriedade frame de 0 a frameCount - 1)
-    const seq = {
-        frame: 0
-    };
+    const seq = { frame: 0 };
+    const seq5 = { frame: 0 };
 
     let loadedImages = 0;
+    const totalToLoad = frameCount + frameCount5;
+
+    // Configuração do Canvas S5
+    const canvas5 = document.getElementById("s5-canvas");
+    const ctx5 = canvas5 ? canvas5.getContext("2d") : null;
+    if (canvas5) {
+        canvas5.width = 2560;
+        canvas5.height = 1440;
+    }
 
     // Função de Preload de Imagens
     function preloadImages() {
         // Trava o scroll da página enquanto carrega
         document.body.style.overflow = 'hidden';
 
+        function checkLoad() {
+            loadedImages++;
+            // Atualiza a UI do Preloader
+            const progress = Math.round((loadedImages / totalToLoad) * 100);
+            loaderBar.style.width = `${progress}%`;
+            loaderText.innerText = `${progress}%`;
+
+            // Quando todas as imagens carregarem, inicializa a experiência
+            if (loadedImages === totalToLoad) {
+                initExperience();
+            }
+        }
+
         for (let i = 1; i <= frameCount; i++) {
             const img = new Image();
             img.src = currentFrame(i);
-            
-            img.onload = () => {
-                loadedImages++;
-                
-                // Atualiza a UI do Preloader
-                const progress = Math.round((loadedImages / frameCount) * 100);
-                loaderBar.style.width = `${progress}%`;
-                loaderText.innerText = `${progress}%`;
-
-                // Quando todas as imagens carregarem, inicializa a experiência
-                if (loadedImages === frameCount) {
-                    initExperience();
-                }
-            };
-            
+            img.onload = checkLoad;
             images.push(img);
+        }
+
+        for (let i = 1; i <= frameCount5; i++) {
+            const img = new Image();
+            img.src = currentFrame5(i);
+            img.onload = checkLoad;
+            images5.push(img);
         }
     }
 
@@ -60,6 +79,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (images[seq.frame]) {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             ctx.drawImage(images[seq.frame], 0, 0, canvas.width, canvas.height);
+        }
+    }
+
+    function render5() {
+        if (images5[seq5.frame] && canvas5) {
+            ctx5.clearRect(0, 0, canvas5.width, canvas5.height);
+            ctx5.drawImage(images5[seq5.frame], 0, 0, canvas5.width, canvas5.height);
         }
     }
 
@@ -106,15 +132,26 @@ document.addEventListener("DOMContentLoaded", () => {
             // Inicializa as seções que dependem de posições corretas de scroll
             initArsenalAnimations();
             initRealmsScroll();
+            initFuriaAnimations();
+            initS5Animations();
         }, 1000);
 
         // Renderiza o primeiro frame imediatamente
         render();
+        render5();
 
         // 3.1 ANIMAÇÕES DE ENTRADA (Hero Content)
         const tlReveal = gsap.timeline({ 
             defaults: { ease: "power3.out", duration: 1.4 } 
         });
+
+        // Revela a Navbar
+        tlReveal.to("#main-nav", {
+            y: 0,
+            opacity: 1,
+            ease: "power3.out",
+            duration: 1.2
+        }, 0.2);
 
         // Pequeno delay para a transição do preloader terminar antes de revelar
         tlReveal.to(".reveal-content > *", {
@@ -404,6 +441,105 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     }
+
+    // =========================================================
+    // 6. SEÇÃO A FÚRIA DO TROVÃO (Bento Grid)
+    // =========================================================
+    function initFuriaAnimations() {
+        gsap.fromTo("#furia-do-trovao .furia-reveal > *", 
+            { opacity: 0, y: 50 },
+            {
+                opacity: 1,
+                y: 0,
+                duration: 1.2,
+                stagger: 0.2,
+                ease: "power3.out",
+                scrollTrigger: {
+                    trigger: "#furia-do-trovao",
+                    start: "top 75%",
+                }
+            }
+        );
+    }
+
+    // =========================================================
+    // 7. SEÇÃO 5: O DESPERTAR DA TEMPESTADE
+    // =========================================================
+    function initS5Animations() {
+        if (!document.getElementById("secao-5")) return;
+
+        // SCROLL-DRIVEN CANVAS PLAYBACK
+        gsap.to(seq5, {
+            frame: frameCount5 - 1,
+            snap: "frame",
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".s5-section",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true,
+            },
+            onUpdate: render5
+        });
+
+        // REVEAL TEXTO NO FINAL (Aparece e fica no final)
+        gsap.fromTo(".s5-content", 
+            { y: 150, opacity: 0 },
+            {
+                y: 0, 
+                opacity: 1, 
+                ease: "power2.out",
+                scrollTrigger: {
+                    trigger: ".s5-section",
+                    start: "65% top", // Começa a aparecer quando o usuário já scrollou 65% da seção
+                    end: "85% top",   // Termina de aparecer aos 85%
+                    scrub: 1.2
+                }
+            }
+        );
+
+        // ESCALA CANVAS
+        gsap.to("#s5-canvas", {
+            scale: 1.15,
+            ease: "none",
+            scrollTrigger: {
+                trigger: ".s5-section",
+                start: "top top",
+                end: "bottom bottom",
+                scrub: true
+            }
+        });
+
+        // POPUPS (Cards)
+        const c1Tl = gsap.timeline({ scrollTrigger: { trigger: ".s5-section", start: "05% top", end: "20% top", scrub: true } });
+        c1Tl.to("#s5-card-1", { y: 0, opacity: 1, duration: 1, ease: "power2.out" })
+            .to("#s5-card-1", { y: -20, opacity: 0, duration: 1, ease: "power2.in" }, "+=0.5");
+
+        const c2Tl = gsap.timeline({ scrollTrigger: { trigger: ".s5-section", start: "25% top", end: "40% top", scrub: true } });
+        c2Tl.to("#s5-card-2", { y: 0, opacity: 1, duration: 1, ease: "power2.out" })
+            .to("#s5-card-2", { y: -20, opacity: 0, duration: 1, ease: "power2.in" }, "+=0.5");
+
+        const c3Tl = gsap.timeline({ scrollTrigger: { trigger: ".s5-section", start: "45% top", end: "60% top", scrub: true } });
+        c3Tl.to("#s5-card-3", { y: 0, opacity: 1, duration: 1, ease: "power2.out" })
+            .to("#s5-card-3", { y: -20, opacity: 0, duration: 1, ease: "power2.in" }, "+=0.5");
+    }
+
+    // =========================================================
+    // 8. NAVEGAÇÃO SUAVE E MENU
+    // =========================================================
+    document.querySelectorAll('.nav-link').forEach(link => {
+        link.addEventListener('click', (e) => {
+            const targetId = link.getAttribute('href');
+            if (targetId && targetId.startsWith('#')) {
+                e.preventDefault();
+                lenis.scrollTo(targetId, {
+                    offset: 0,
+                    duration: 1.5,
+                    easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)) // Easing super suave
+                });
+            }
+        });
+    });
 
     // Dispara o carregamento das imagens da Hero ao abrir a página
     preloadImages();
