@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="utf-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Thor | Hero Section Premium</title>
+    
+    <!-- Tailwind CSS (via CDN) com as definições do Design System -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        cinzel: ['Cinzel', 'serif'],
+                        inter: ['Inter', 'sans-serif']
+                    },
+                    colors: {
+                        th: {
+                            storm: '#1F2A38',
+                            electric: '#B8860B',
+                            cyan: '#7FD6FF',
+                            brass: '#B8860B',
+                            uru: '#7FD6FF',
+                            red: '#A61E2A',
+                            scarlet: '#D94A4A',
+                            frost: '#E8DCC4',
+                            obsidian: '#0B0F19',
+                            bone: '#E8DCC4',
+                            leather: '#1A1410',
+                            gold: '#FFD700'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Tipografia -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Iconify para os ícones baseados no Design System -->
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    
+    <!-- Estilos customizados da Hero -->
+    <link href="style.css" rel="stylesheet"/>
+</head>
+<body class="bg-[#0B0F19] text-th-bone overflow-x-hidden font-inter selection:bg-th-electric selection:text-[#0B0F19]">
+    
+    <!-- Hero Section (Contêiner longo para o Scroll) -->
+    <!-- min-h-[400vh] garante bastante espaço para o usuário fazer o scroll e o vídeo avançar suavemente -->
+    <section class="hero-section relative min-h-[400vh] w-full" id="hero">
+        
+        <!-- Preloader (Loading bar) -->
+        <div id="preloader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#0B0F19] transition-opacity duration-1000">
+            <h2 class="font-cinzel text-th-cyan tracking-[.4em] uppercase mb-6 text-sm">Carregando Mjolnir</h2>
+            <div class="w-64 h-[2px] bg-white/10 relative overflow-hidden">
+                <div id="loader-bar" class="absolute top-0 left-0 h-full w-0 bg-th-electric shadow-[0_0_10px_#B8860B] transition-all duration-200"></div>
+            </div>
+            <p id="loader-text" class="text-[10px] text-th-brass/50 font-mono mt-4">0%</p>
+        </div>
+
+        <!-- Sticky Container (Mantém o conteúdo fixo na tela enquanto o scroll acontece) -->
+        <div class="hero-sticky-container sticky top-0 h-screen w-full flex flex-col md:flex-row overflow-hidden bg-[#0B0F19]">
+            
+            <!-- DIREITA/FUNDO: Canvas da Hero (Ocupando 100% da Tela) -->
+            <div class="hero-canvas-wrapper absolute inset-0 w-full h-full z-0 flex items-center justify-center overflow-hidden">
+                
+                <!-- Gradientes para transição suave e escurecer a esquerda onde fica o texto -->
+                <div class="absolute inset-0 bg-gradient-to-r from-[#0B0F19]/90 via-[#0B0F19]/50 to-transparent z-10 pointer-events-none"></div>
+                
+                <!-- O Canvas -->
+                <canvas 
+                    id="hero-canvas"
+                    class="w-full h-full object-cover">
+                </canvas>
+            </div>
+            
+            <!-- Textura rúnica de fundo (Baseada no Design System) -->
+            <div class="absolute inset-0 bg-runic opacity-10 pointer-events-none z-10 mix-blend-screen"></div>
+            
+            <!-- Glow atmosférico -->
+            <div class="absolute top-1/4 left-[10%] w-[500px] h-[500px] bg-th-electric/10 rounded-full blur-[120px] pointer-events-none z-10"></div>
+
+            <!-- ESQUERDA: Texto e Botões (CTA) -->
+            <div class="hero-content relative z-20 w-full md:w-[60%] h-full flex flex-col justify-center px-8 md:px-16 lg:px-24">
+                
+                <div class="reveal-content space-y-6 max-w-2xl">
+                    <!-- Rótulo Superior -->
+                    <div class="flex items-center gap-3">
+                        <iconify-icon icon="solar:bolt-circle-linear" class="text-th-cyan text-xl"></iconify-icon>
+                        <span class="font-cinzel text-[10px] sm:text-xs tracking-[.4em] uppercase text-th-cyan">Protocolo de Defesa</span>
+                        <span class="w-16 h-[1px] bg-gradient-to-r from-th-cyan to-transparent"></span>
+                    </div>
+
+                    <!-- Headline Principal em 3 Níveis -->
+                    <h1 class="hero-headline font-cinzel uppercase leading-[1.05] tracking-tight flex flex-col gap-2 relative z-10">
+                        <span class="headline-line-1 font-bold text-white drop-shadow-[0_0_15px_rgba(255,255,255,0.1)]">Rei de</span>
+                        <span class="headline-line-2 text-transparent-stroke-brass">Asgard</span>
+                        <span class="headline-line-3 font-bold text-th-electric drop-shadow-[0_0_20px_rgba(184,134,11,0.2)]">Deus do Trovão</span>
+                    </h1>
+
+                    <!-- Parágrafo Curto -->
+                    <p class="hero-paragraph text-th-bone/80 font-light leading-relaxed max-w-md border-l-2 border-th-electric pl-5 py-1">
+                        Protetor dos nove reinos. Sinta o poder da tempestade e a fúria do trovão guiando seu destino na batalha eterna.
+                    </p>
+
+                    <!-- Botões CTA (Primário e Secundário Ghost) -->
+                    <div class="hero-buttons flex flex-col sm:flex-row items-start sm:items-center gap-5 pt-6">
+                        <!-- Primário -->
+                        <a href="#" class="medieval-corners group relative inline-flex items-center justify-center gap-3 font-cinzel font-medium text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-electric bg-th-electric/10 text-th-cyan hover:bg-th-electric hover:text-white transition-all duration-500">
+                            <span>Invocar Mjolnir</span>
+                            <iconify-icon icon="solar:bolt-linear" width="18" class="group-hover:scale-110 transition-transform duration-500"></iconify-icon>
+                        </a>
+                        <!-- Secundário / Ghost -->
+                        <a href="#" class="medieval-corners relative inline-flex items-center justify-center gap-3 border border-th-brass/30 bg-transparent text-white font-cinzel font-medium text-xs uppercase tracking-[.2em] px-8 py-4 hover:border-th-cyan/30 hover:bg-th-cyan/5 transition-all duration-500">
+                            <span>Explorar Reinos</span>
+                            <iconify-icon icon="solar:map-arrow-up-linear" width="18"></iconify-icon>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Indicador de Scroll -->
+                <div class="scroll-indicator absolute bottom-12 left-8 md:left-16 flex items-center gap-4 opacity-70">
+                    <div class="w-[1px] h-16 bg-th-brass/20 overflow-hidden relative">
+                        <div class="absolute top-0 left-0 w-full h-1/2 bg-th-cyan scroll-line-anim shadow-[0_0_10px_#7FD6FF]"></div>
+                    </div>
+                    <span class="font-cinzel text-[9px] uppercase tracking-[.4em] text-th-brass/70 transform -rotate-90 origin-left translate-y-8">Scroll</span>
+                </div>
+            </div>
+
+            <!-- Popups de Frases (Ficam invisíveis até o scroll revelar) -->
+            <div id="quote-1" class="quote-card absolute top-[25%] right-[10%] md:right-[15%] w-64 opacity-0 medieval-card p-5 backdrop-blur-md border border-th-brass/30 bg-th-storm/60 z-30 transform translate-y-10 hidden sm:block">
+                <iconify-icon icon="solar:quote-left-linear" class="text-th-cyan text-2xl absolute -top-3 -left-2 drop-shadow-[0_0_10px_#7FD6FF]"></iconify-icon>
+                <p class="font-cinzel text-xs text-th-bone/90 tracking-[.1em] uppercase leading-relaxed">"Afortunadamente, sou poderoso!"</p>
+                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-th-brass/20">
+                    <div class="w-1.5 h-1.5 bg-th-cyan rounded-full animate-pulse shadow-[0_0_5px_#7FD6FF]"></div>
+                    <p class="font-inter text-[9px] text-th-cyan tracking-widest uppercase">Mjölnir Sync</p>
+                </div>
+            </div>
+
+            <div id="quote-2" class="quote-card absolute bottom-[20%] left-[8%] md:left-[20%] w-64 opacity-0 medieval-card p-5 backdrop-blur-md border border-th-brass/30 bg-th-storm/60 z-30 transform translate-y-10 hidden sm:block">
+                <iconify-icon icon="solar:quote-left-linear" class="text-th-electric text-2xl absolute -top-3 -left-2 drop-shadow-[0_0_10px_#B8860B]"></iconify-icon>
+                <p class="font-cinzel text-xs text-th-bone/90 tracking-[.1em] uppercase leading-relaxed">"Tragam-me Thanos!"</p>
+                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-th-brass/20">
+                    <div class="w-1.5 h-1.5 bg-th-electric rounded-full animate-pulse shadow-[0_0_5px_#B8860B]"></div>
+                    <p class="font-inter text-[9px] text-th-electric tracking-widest uppercase">Stormbreaker Protocol</p>
+                </div>
+            </div>
+
+            <div id="quote-3" class="quote-card absolute top-[20%] right-[5%] md:right-[20%] w-64 opacity-0 medieval-card p-5 backdrop-blur-md border border-th-brass/30 bg-[#0B0F19]/80 z-30 transform translate-y-10 hidden sm:block">
+                <iconify-icon icon="solar:quote-left-linear" class="text-th-bone text-2xl absolute -top-3 -left-2 drop-shadow-[0_0_10px_#E8DCC4]"></iconify-icon>
+                <p class="font-cinzel text-xs text-th-bone/90 tracking-[.1em] uppercase leading-relaxed">"Ele é meu irmão... bom, ele é adotado."</p>
+                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-th-brass/20">
+                    <div class="w-1.5 h-1.5 bg-th-bone rounded-full animate-pulse shadow-[0_0_5px_#E8DCC4]"></div>
+                    <p class="font-inter text-[9px] text-th-bone tracking-widest uppercase">Loki Exception</p>
+                </div>
+            </div>
+
+            <div id="quote-4" class="quote-card absolute bottom-[30%] left-[10%] md:left-[35%] w-64 opacity-0 medieval-card p-5 backdrop-blur-md border border-th-brass/30 bg-th-storm/60 z-30 transform translate-y-10 hidden sm:block">
+                <iconify-icon icon="solar:quote-left-linear" class="text-th-cyan text-2xl absolute -top-3 -left-2 drop-shadow-[0_0_10px_#7FD6FF]"></iconify-icon>
+                <p class="font-cinzel text-xs text-th-bone/90 tracking-[.1em] uppercase leading-relaxed">"Nós nos conhecemos do trabalho!"</p>
+                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-th-brass/20">
+                    <div class="w-1.5 h-1.5 bg-th-cyan rounded-full animate-pulse shadow-[0_0_5px_#7FD6FF]"></div>
+                    <p class="font-inter text-[9px] text-th-cyan tracking-widest uppercase">Hulk Encounter</p>
+                </div>
+            </div>
+
+            <div id="quote-5" class="quote-card absolute top-[35%] left-[50%] w-64 opacity-0 medieval-card p-5 backdrop-blur-md border border-th-brass/30 bg-[#0B0F19]/90 z-30 transform translate-y-10 hidden sm:block shadow-[0_0_30px_rgba(166,30,42,0.15)]">
+                <iconify-icon icon="solar:quote-left-linear" class="text-th-red text-2xl absolute -top-3 -left-2 drop-shadow-[0_0_10px_#A61E2A]"></iconify-icon>
+                <p class="font-cinzel text-xs text-th-bone/90 tracking-[.1em] uppercase leading-relaxed">"Eu sou Thor, Rei de Asgard!"</p>
+                <div class="flex items-center gap-2 mt-4 pt-3 border-t border-th-brass/20">
+                    <div class="w-1.5 h-1.5 bg-th-red rounded-full animate-pulse shadow-[0_0_5px_#A61E2A]"></div>
+                    <p class="font-inter text-[9px] text-th-brass/70 tracking-widest uppercase">Allfather Resonance</p>
+                </div>
+            </div>
+            
+        </div>
+    </section>
+
+    <!-- ========================================================= -->
+    <!-- SEÇÃO 2: O ARSENAL DE UM DEUS (Dual Showcase)             -->
+    <!-- ========================================================= -->
+    <section id="arsenal" class="relative w-full min-h-screen bg-[#06090f] flex flex-col md:flex-row overflow-hidden border-t border-th-brass/20">
+        
+        <!-- Título Central Fixo -->
+        <div class="absolute top-12 left-0 w-full text-center z-20 pointer-events-none">
+            <h2 class="font-cinzel text-2xl md:text-4xl text-th-bone tracking-[0.2em] uppercase drop-shadow-lg">O Arsenal Divino</h2>
+            <div class="w-24 h-[1px] bg-gradient-to-r from-transparent via-th-brass to-transparent mx-auto mt-4"></div>
+        </div>
+
+        <!-- LADO ESQUERDO: MJÖLNIR -->
+        <div class="weapon-panel group relative w-full md:w-1/2 h-[50vh] md:h-screen flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] hover:md:w-[60%] border-b md:border-b-0 md:border-r border-th-brass/10 overflow-hidden cursor-pointer">
+            
+            <!-- Imagem de Fundo (Ambiente do Martelo) -->
+            <div class="absolute inset-0 bg-[url('assets/images/mjolnir-bg.jpg')] bg-cover bg-center opacity-10 group-hover:opacity-30 group-hover:scale-105 transition-all duration-1000 mix-blend-screen"></div>
+
+            <!-- Glow de fundo ativado no hover -->
+            <div class="absolute inset-0 bg-gradient-to-t from-th-cyan/20 via-[#06090f]/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-700"></div>
+            
+            <!-- Tipografia Fantasma (Background) -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-cinzel font-black text-[12vw] md:text-[8vw] text-th-cyan/10 whitespace-nowrap pointer-events-none transition-transform duration-1000 group-hover:scale-110 mix-blend-overlay">MJÖLNIR</div>
+
+            <!-- Conteúdo Centralizado -->
+            <div class="relative z-10 flex flex-col items-center text-center p-8 mt-10 md:mt-0">
+                <!-- Imagem Isolada do Martelo -->
+                <img src="assets/images/mjolnir.png" alt="Mjölnir" class="w-48 md:w-64 object-contain mb-2 drop-shadow-[0_0_15px_rgba(127,214,255,0.2)] group-hover:drop-shadow-[0_0_40px_rgba(127,214,255,0.6)] transition-all duration-700 transform group-hover:-translate-y-4 group-hover:scale-110">
+                
+                <h3 class="font-cinzel text-3xl md:text-5xl text-th-bone tracking-widest uppercase mb-2">Mjölnir</h3>
+                
+                <p class="font-inter text-xs md:text-sm text-th-cyan tracking-[0.3em] uppercase mb-8 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">A Arma da Dignidade</p>
+                
+                <!-- Info Card (Medieval) revelado apenas no Hover -->
+                <div class="medieval-card p-6 border border-th-cyan/30 bg-th-storm/90 backdrop-blur-md opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 w-72 md:w-80 text-left shadow-[0_0_40px_rgba(127,214,255,0.1)]">
+                    <ul class="space-y-4 font-inter text-[10px] md:text-xs tracking-wider text-th-bone/80">
+                        <li class="flex justify-between border-b border-th-cyan/20 pb-2">
+                            <span class="uppercase text-th-cyan font-semibold">Material</span>
+                            <span class="text-right">Metal Uru Estelar</span>
+                        </li>
+                        <li class="flex justify-between border-b border-th-cyan/20 pb-2">
+                            <span class="uppercase text-th-cyan font-semibold">Forja</span>
+                            <span class="text-right">Coração de Estrela<br>(Nidavellir)</span>
+                        </li>
+                        <li class="flex justify-between pb-1">
+                            <span class="uppercase text-th-cyan font-semibold">Feitiço Original</span>
+                            <span class="text-right italic">"Aquele que for digno..."<br>- Odin Allfather</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- LADO DIREITO: STORMBREAKER (espelha a estrutura exata do Mjölnir) -->
+        <div class="weapon-panel group relative w-full md:w-1/2 h-[50vh] md:h-screen flex items-center justify-center transition-all duration-700 ease-[cubic-bezier(0.25,1,0.5,1)] hover:md:w-[60%] overflow-hidden cursor-pointer">
+            
+            <!-- Imagem de Fundo (Ambiente do Machado) -->
+            <div class="absolute inset-0 bg-[url('assets/images/stormbreaker-bg.png')] bg-cover bg-center opacity-10 group-hover:opacity-30 group-hover:scale-105 transition-all duration-1000 mix-blend-screen"></div>
+
+            <!-- Glow de fundo ativado no hover (mesma estrutura do Mjölnir) -->
+            <div class="absolute inset-0 bg-gradient-to-t from-th-gold/20 via-[#06090f]/80 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-700"></div>
+            
+            <!-- Tipografia Fantasma (Background) -->
+            <div class="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-cinzel font-black text-[12vw] md:text-[8vw] text-th-gold/10 whitespace-nowrap pointer-events-none transition-transform duration-1000 group-hover:scale-110 mix-blend-overlay">STORMBREAKER</div>
+
+            <!-- Conteúdo Centralizado -->
+            <div class="relative z-10 flex flex-col items-center text-center p-8 mt-10 md:mt-0">
+                <!-- Imagem Isolada do Machado -->
+                <img src="assets/images/stormbreaker.png" alt="Stormbreaker" class="w-48 md:w-64 object-contain mb-2 drop-shadow-[0_0_15px_rgba(255,215,0,0.2)] group-hover:drop-shadow-[0_0_40px_rgba(255,215,0,0.6)] transition-all duration-700 transform group-hover:-translate-y-4 group-hover:scale-110">
+                
+                <h3 class="font-cinzel text-3xl md:text-5xl text-th-bone tracking-widest uppercase mb-2">Stormbreaker</h3>
+                
+                <p class="font-inter text-xs md:text-sm text-th-gold tracking-[0.3em] uppercase mb-8 opacity-0 translate-y-4 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-100">A Fúria de um Rei</p>
+                
+                <!-- Info Card (Medieval) revelado apenas no Hover -->
+                <div class="medieval-card p-6 border border-th-gold/30 bg-th-storm/90 backdrop-blur-md opacity-0 translate-y-8 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-500 delay-200 w-72 md:w-80 text-left shadow-[0_0_40px_rgba(255,215,0,0.1)]">
+                    <ul class="space-y-4 font-inter text-[10px] md:text-xs tracking-wider text-th-bone/80">
+                        <li class="flex justify-between border-b border-th-gold/20 pb-2">
+                            <span class="uppercase text-th-gold font-semibold">Composição</span>
+                            <span class="text-right text-th-bone">Uru + Madeira Groot</span>
+                        </li>
+                        <li class="flex justify-between border-b border-th-gold/20 pb-2">
+                            <span class="uppercase text-th-gold font-semibold">Poder Singular</span>
+                            <span class="text-right text-th-bone">Invocação da Bifrost</span>
+                        </li>
+                        <li class="flex justify-between pb-1">
+                            <span class="uppercase text-th-gold font-semibold">Feito Notável</span>
+                            <span class="text-right italic text-th-bone">"Eu mirei na cabeça"<br>- Fim da Dinastia</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- ========================================================= -->
+    <!-- SEÇÃO 3: PROTETOR DOS NOVE REINOS (Horizontal Scroll)      -->
+    <!-- ========================================================= -->
+    <section id="realms-scroll" class="relative bg-th-storm overflow-hidden border-t border-th-brass/20">
+        
+        <!-- Texto Fantasma Gigante de Fundo (IX - Nove) -->
+        <div class="ghost-number text-transparent-stroke-bone">IX</div>
+
+        <div class="realms-wrapper">
+            
+            <!-- Slide 0: INTRODUÇÃO -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-content-box max-w-4xl">
+                    <div class="flex items-center gap-3 mb-6">
+                        <iconify-icon icon="solar:globus-linear" class="text-th-cyan text-xl"></iconify-icon>
+                        <span class="font-cinzel text-xs tracking-[.4em] uppercase text-th-cyan">Crônicas de Yggdrasil</span>
+                    </div>
+                    <h2 class="font-cinzel text-5xl md:text-8xl text-th-bone uppercase leading-[0.9] mb-8">
+                        Protetor dos<br>
+                        <span class="text-transparent-stroke-brass">Nove Reinos</span>
+                    </h2>
+                    <p class="font-inter text-sm md:text-lg text-th-bone/60 max-w-xl border-l border-th-electric pl-6 py-2 leading-relaxed">
+                        Conforme a profecia, o Deus do Trovão deve manter o equilíbrio entre os mundos. Cada reino possui sua própria essência, perigos e glórias.
+                    </p>
+                </div>
+                <!-- Indicador visual de progresso horizontal -->
+                <div class="absolute bottom-12 left-12 flex items-center gap-4 opacity-50">
+                    <span class="font-mono text-[10px] text-th-bone">00 / 09</span>
+                    <div class="w-32 h-[1px] bg-white/10 relative">
+                        <div class="absolute top-0 left-0 h-full w-1/10 bg-th-electric"></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Slide 1: ASGARD -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Asgard.png" alt="Asgard" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-th-electric tracking-[0.5em] uppercase text-[10px] mb-2 block">Reino dos Deuses</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Asgard</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O Reino Dourado, lar dos Æsir e trono do Pai-de-Todos. O coração da ordem cósmica.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">01</div>
+            </div>
+
+            <!-- Slide 2: MIDGARD -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Midgard.png" alt="Midgard" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-th-cyan tracking-[0.5em] uppercase text-[10px] mb-2 block">Reino dos Homens</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Midgard</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">A Terra. Frágil, porém resiliente. Sob a proteção constante do Deus do Trovão.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">02</div>
+            </div>
+
+            <!-- Slide 3: NIDAVELLIR -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/NIDAVELLIR.png" alt="Nidavellir" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-th-brass tracking-[0.5em] uppercase text-[10px] mb-2 block">Forja das Estrelas</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Nidavellir</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O lar dos anões ferreiros. Onde o Mjölnir e o Stormbreaker foram forjados no coração de estrelas.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">03</div>
+            </div>
+
+            <!-- Slide 4: JOTUNHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Jotunheim.png" alt="Jotunheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-blue-400 tracking-[0.5em] uppercase text-[10px] mb-2 block">Gelo Eterno</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Jotunheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O reino desolado dos Gigantes de Gelo. Um mundo de geada e sombras antigas.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">04</div>
+            </div>
+
+            <!-- Slide 5: ALFHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Alfheim.png" alt="Alfheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-th-uru tracking-[0.5em] uppercase text-[10px] mb-2 block">Luz Ancestral</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Alfheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O lar dos Elfos de Luz. Um reino de beleza inigualável e resplendor etéreo.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">05</div>
+            </div>
+
+            <!-- Slide 6: HELHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Helheim.png" alt="Helheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-th-red tracking-[0.5em] uppercase text-[10px] mb-2 block">Submundo</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Helheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O reino dos mortos. Governado por Hela, onde as almas perdidas encontram seu destino final.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">06</div>
+            </div>
+
+            <!-- Slide 7: MUSPELHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Muspelheim.png" alt="Muspelheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-orange-600 tracking-[0.5em] uppercase text-[10px] mb-2 block">Chamas do Caos</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Muspelheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">Um mundo de fogo ardente e lar de Surtur. O berço da destruição profetizada no Ragnarök.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">07</div>
+            </div>
+
+            <!-- Slide 8: SVARTALFHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Svartalfheim.png" alt="Svartalfheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-purple-900 tracking-[0.5em] uppercase text-[10px] mb-2 block">Mundo das Sombras</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Svartalfheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">O reino dos Elfos Negros. Um lugar de trevas eternas e segredos esquecidos.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">08</div>
+            </div>
+
+            <!-- Slide 9: VANAHEIM -->
+            <div class="realm-slide px-12 md:px-24">
+                <div class="realm-image-container">
+                    <img src="assets/images/Vanaheim.png" alt="Vanaheim" class="w-full h-full object-contain">
+                </div>
+                <div class="realm-content-box text-center md:text-left">
+                    <span class="font-cinzel text-green-500 tracking-[0.5em] uppercase text-[10px] mb-2 block">Sabedoria Natural</span>
+                    <h3 class="font-cinzel text-4xl md:text-7xl text-th-bone uppercase mb-4">Vanaheim</h3>
+                    <p class="font-inter text-sm text-th-bone/70 max-w-md mx-auto md:mx-0">Lar dos deuses Vanir. Mestres da magia, fertilidade e conhecedores dos segredos do futuro.</p>
+                </div>
+                <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 font-cinzel text-[40vw] text-white/5 pointer-events-none select-none z-0">09</div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Bibliotecas Necessárias via CDN -->
+    <!-- Lenis: Para scroll super suave e premium (Nível Apple) -->
+    <script src="https://cdn.jsdelivr.net/gh/studio-freight/lenis@1.0.29/bundled/lenis.min.js"></script>
+    
+    <!-- GSAP & ScrollTrigger: Para controle da animação baseada no Scroll -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    
+    <!-- Lógica de interações da Hero -->
+    <script src="script.js"></script>
+</body>
+</html>

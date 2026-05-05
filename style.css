@@ -1,0 +1,383 @@
+/* style.css */
+
+/*
+ * THOR DESIGN SYSTEM - HERO SECTION SPECIFIC STYLES
+ * Não redefine as variáveis base, apenas aplica classes e regras utilitárias
+ * para garantir um layout premium nível Apple.
+ */
+
+/* Resets & Variáveis Locais */
+:root {
+  --spacing-premium: clamp(2rem, 5vw, 6rem);
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #0B0F19; /* Obsidian (Cor de fundo escura do Thor) */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overscroll-behavior: none; /* Previne o "bounce" nativo do iOS/Android */
+  -webkit-overflow-scrolling: touch; /* Smooth scroll no iOS */
+}
+
+/* 
+ * Custom Scrollbar (Premium Feel)
+ */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #0B0F19;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(184, 134, 11, 0.3); /* Brass com opacidade */
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(184, 134, 11, 0.6);
+}
+
+/* 
+ * Utilitário Base do Design System 
+ * (Textura de fundo Rúnica sutil)
+ */
+.bg-runic {
+  background-image: url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23b8860b" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>');
+}
+
+/* 
+ * Outline Typography (Ghost Effect)
+ * Efeito visual transparente com borda fina premium 
+ */
+.text-transparent-stroke-brass {
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.1vw, 2px) #B8860B; /* Cor Brass do DS */
+}
+
+.text-transparent-stroke-bone {
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+  -webkit-text-stroke: clamp(1px, 0.1vw, 2px) rgba(232, 220, 196, 0.4); /* Bone com opacidade */
+}
+
+/* 
+ * Medieval Corners (Utilitário visual de botões do DS)
+ * Cria bordas poligonais decorativas sem imagens externas.
+ */
+.medieval-corners {
+  position: relative;
+}
+.medieval-corners::before,
+.medieval-corners::after {
+  content: '';
+  position: absolute;
+  width: 16px;
+  height: 16px;
+  border: 1px solid rgba(184, 134, 11, 0.5); /* Brass */
+  pointer-events: none;
+  transition: all 0.4s cubic-bezier(0.25, 1, 0.5, 1); /* Animação suave e fluida */
+  z-index: 2;
+}
+.medieval-corners::before {
+  top: -2px; left: -2px;
+  border-right: none; border-bottom: none;
+}
+.medieval-corners::after {
+  bottom: -2px; right: -2px;
+  border-left: none; border-top: none;
+}
+.medieval-corners:hover::before {
+  top: -6px; left: -6px;
+  border-color: #7FD6FF; /* Muda para Cyan Lightning no hover */
+}
+.medieval-corners:hover::after {
+  bottom: -6px; right: -6px;
+  border-color: #7FD6FF; /* Muda para Cyan Lightning no hover */
+}
+
+/* 
+ * Typography Responsive Scales
+ * Uso de CLAMP para escalar perfeitamente em telas grandes ou celulares.
+ */
+.hero-headline .headline-line-1 {
+  font-size: clamp(2.5rem, 6vw, 6rem);
+}
+.hero-headline .headline-line-2 {
+  font-size: clamp(3.2rem, 8vw, 8rem);
+  letter-spacing: -0.02em;
+}
+.hero-headline .headline-line-3 {
+  font-size: clamp(2rem, 5vw, 5rem);
+}
+
+.hero-paragraph {
+  font-size: clamp(0.875rem, 1.2vw, 1.125rem);
+}
+
+/* 
+ * Initial States for Entrance Animations
+ * Esconde os elementos inicialmente para o GSAP fazer a revelação 
+ */
+.reveal-content > * {
+  opacity: 0;
+  transform: translateY(30px);
+}
+
+/* 
+ * Animação do Indicador de Scroll
+ */
+@keyframes scrollDown {
+  0% { transform: translateY(-100%); }
+  50% { transform: translateY(0); }
+  100% { transform: translateY(100%); }
+}
+
+.scroll-line-anim {
+  animation: scrollDown 2.5s cubic-bezier(0.65, 0, 0.35, 1) infinite;
+}
+
+/* 
+ * Video specific styles
+ */
+#hero-video {
+  /* Previne interações indesejadas (como pausas pelo usuário) 
+     fazendo o vídeo agir puramente como um background interativo (canvas) */
+  pointer-events: none;
+}
+
+/* 
+ * Horizontal Scroll (Nove Reinos)
+ */
+#realms-scroll {
+  height: 100vh;
+  width: 100%;
+}
+
+.realms-wrapper {
+  display: flex;
+  flex-wrap: nowrap;
+  width: 1000vw; /* Valor dinâmico ajustado via JS ou fixo para 10 slides */
+  height: 100%;
+}
+
+.realm-slide {
+  width: 100vw;
+  height: 100%;
+  flex-shrink: 0;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.realm-image-container {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 90vw;
+  height: 55vh;
+  border: 1px solid rgba(184, 134, 11, 0.2);
+  background: radial-gradient(circle at center, rgba(31, 42, 56, 0.4) 0%, rgba(11, 15, 25, 0.8) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.3;
+  transition: opacity 0.8s ease;
+  z-index: 1;
+  box-shadow: inset 0 0 40px rgba(0, 0, 0, 0.6), 0 20px 50px rgba(0,0,0,0.5);
+  padding: 0;
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .realm-image-container {
+    width: 70vw;
+    height: 70vh;
+  }
+}
+
+/* Detalhes medievais na moldura */
+.realm-image-container::before,
+.realm-image-container::after {
+  content: '';
+  position: absolute;
+  width: 40px;
+  height: 40px;
+  border: 1px solid rgba(127, 214, 255, 0.4); /* Cyan Lighting */
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 2; /* Fica acima da imagem */
+}
+
+.realm-image-container::before {
+  top: -1px; left: -1px;
+  border-right: none; border-bottom: none;
+}
+
+.realm-image-container::after {
+  bottom: -1px; right: -1px;
+  border-left: none; border-top: none;
+}
+
+.realm-slide.active-slide .realm-image-container {
+  opacity: 1;
+}
+
+.realm-slide.active-slide .realm-image-container::before {
+  top: -8px; left: -8px;
+  border-color: #7FD6FF;
+}
+
+.realm-slide.active-slide .realm-image-container::after {
+  bottom: -8px; right: -8px;
+  border-color: #7FD6FF;
+}
+
+.realm-image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover !important; /* Força a imagem a preencher a moldura toda */
+  filter: drop-shadow(0 0 20px rgba(127, 214, 255, 0.15));
+}
+
+/* Box de introdução */
+.realm-content-box {
+  position: relative;
+  z-index: 10;
+  max-width: 600px;
+  pointer-events: none;
+  padding: 1.5rem;
+}
+
+/* Faixa (Band Overlay) exclusivamente para os slides com imagem */
+.realm-image-container + .realm-content-box {
+  position: absolute;
+  bottom: 2vh;
+  left: 0;
+  width: 100vw;
+  max-width: none;
+  background: linear-gradient(to right, rgba(11, 15, 25, 0) 0%, rgba(11, 15, 25, 0.95) 15%, rgba(11, 15, 25, 0.95) 85%, rgba(11, 15, 25, 0) 100%);
+  padding: 1.5rem 1rem;
+  border: none;
+  border-top: 1px solid rgba(184, 134, 11, 0.3);
+  border-bottom: 1px solid rgba(184, 134, 11, 0.3);
+  backdrop-filter: blur(12px);
+  border-radius: 0;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.8);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center !important;
+}
+
+@media (min-width: 768px) {
+  .realm-image-container + .realm-content-box {
+    bottom: 10vh;
+    padding: 3rem 2rem;
+  }
+}
+
+/* Tipografia na Faixa - Mobile First */
+.realm-image-container + .realm-content-box span.text-\[10px\] {
+  font-size: 0.65rem !important;
+  letter-spacing: 0.25em !important;
+  margin-bottom: 0.5rem;
+}
+
+.realm-image-container + .realm-content-box h3 {
+  font-size: 2.2rem !important;
+  line-height: 1 !important;
+  text-shadow: 0 5px 15px rgba(0,0,0,0.8);
+  margin-bottom: 0.5rem;
+}
+
+.realm-image-container + .realm-content-box p {
+  font-size: 0.8rem !important;
+  line-height: 1.4 !important;
+  text-shadow: 0 2px 5px rgba(0,0,0,0.8);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Tablet */
+@media (min-width: 768px) {
+  .realm-image-container + .realm-content-box span.text-\[10px\] {
+    font-size: 0.9rem !important;
+    letter-spacing: 0.4em !important;
+    margin-bottom: 1rem;
+  }
+  .realm-image-container + .realm-content-box h3 {
+    font-size: 4rem !important;
+    margin-bottom: 1rem;
+  }
+  .realm-image-container + .realm-content-box p {
+    font-size: 1rem !important;
+    line-height: 1.5 !important;
+  }
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+  .realm-image-container + .realm-content-box h3 {
+    font-size: 7rem !important;
+  }
+  .realm-image-container + .realm-content-box span.text-\[10px\] {
+    font-size: 1.25rem !important;
+  }
+  .realm-image-container + .realm-content-box p {
+    font-size: 1.25rem !important;
+    line-height: 1.6 !important;
+  }
+}
+
+.ghost-number {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 50vw;
+  font-family: 'Cinzel', serif;
+  font-weight: 900;
+  line-height: 1;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0.05;
+}
+
+/* ==========================================
+   MOBILE GLOBAL OVERRIDES (< 768px)
+   ========================================== */
+@media (max-width: 767px) {
+  /* Slide de introdução - tipografia menor */
+  .realm-slide .realm-content-box:not(.realm-image-container + .realm-content-box) h2 {
+    font-size: 2.8rem !important;
+    line-height: 0.95 !important;
+  }
+
+  /* Slides individuais - padding reduzido */
+  .realm-slide {
+    padding-left: 1rem !important;
+    padding-right: 1rem !important;
+  }
+
+  /* Moldura - cantos menores em telas pequenas */
+  .realm-image-container::before,
+  .realm-image-container::after {
+    width: 24px;
+    height: 24px;
+  }
+
+  /* Ghost Number menor */
+  .ghost-number {
+    font-size: 70vw;
+  }
+
+  /* Indicador de progresso no bottom */
+  .realm-slide > .absolute.bottom-12 {
+    bottom: 0.5rem !important;
+    left: 1rem !important;
+  }
+}

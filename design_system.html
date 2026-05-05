@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en" class="dark scroll-smooth">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ASGARD.CORE | Storm Runic Codex</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link href="../arttools/styles.css" rel="stylesheet"/>
+<link href="../hamburgueria/styles.css" rel="stylesheet"/>
+<link href="../iron_man/style.css" rel="stylesheet"/>
+<script>
+tailwind.config={darkMode:'class',theme:{extend:{fontFamily:{cinzel:['Cinzel','serif'],inter:['Inter','sans-serif']},colors:{th:{storm:'#1F2A38','electric':'#B8860B','cyan':'#7FD6FF','brass':'#B8860B','uru':'#7FD6FF','red':'#A61E2A','scarlet':'#D94A4A','frost':'#E8DCC4','obsidian':'#0B0F19','bone':'#E8DCC4','leather':'#1A1410'}}}}}
+</script>
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+body{font-family:'Inter',sans-serif;background:#1A1410;color:#E8DCC4;overflow-x:hidden}
+.font-cinzel{font-family:'Cinzel',serif}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:#1A1410}
+::-webkit-scrollbar-thumb{background:rgba(184,134,11,0.3)}
+::-webkit-scrollbar-thumb:hover{background:rgba(184,134,11,0.6)}
+.vertical-streaks{background-image:linear-gradient(90deg,transparent 99%,rgba(127,214,255,0.02) 100%);background-size:10vw 100%}
+.bg-runic{background-image:url('data:image/svg+xml;utf8,<svg width="60" height="60" viewBox="0 0 60 60" xmlns="http://www.w3.org/2000/svg"><g fill="none" fill-rule="evenodd"><g fill="%23b8860b" fill-opacity="0.05"><path d="M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z"/></g></g></svg>')}
+@keyframes flash-h{0%,100%{opacity:0}10%{opacity:1}20%{opacity:0}30%{opacity:0.5}40%{opacity:0}}
+.anim-flash{animation:flash-h 4s infinite}
+@keyframes hero-rise{0%{opacity:0;transform:translateY(24px)}100%{opacity:1;transform:translateY(0)}}
+.anim-rise{animation:hero-rise .9s cubic-bezier(.22,1,.36,1) both}
+@keyframes arc-pulse{0%,100%{box-shadow:0 0 20px rgba(127,214,255,.2)}50%{box-shadow:0 0 50px rgba(127,214,255,.5)}}
+.arc-pulse{animation:arc-pulse 3s ease-in-out infinite}
+@keyframes particle-float{0%,100%{transform:translateY(0) scale(1);opacity:.3}50%{transform:translateY(-20px) scale(1.2);opacity:.8}}
+.particle{animation:particle-float 4s ease-in-out infinite}
+@keyframes beam-fall-thor{0%{transform:translateY(-100%);opacity:0}5%{opacity:.5}50%{opacity:1}95%{opacity:.5}100%{transform:translateY(120vh);opacity:0}}
+.beam-t1{animation:beam-fall-thor 6s linear infinite}
+.beam-t2{animation:beam-fall-thor 8s linear infinite;animation-delay:2s}
+.beam-t3{animation:beam-fall-thor 7s linear infinite;animation-delay:4s}
+@keyframes lightning-shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+.lightning-shimmer{background:linear-gradient(90deg,#B8860B,#7FD6FF,#7FD6FF,#B8860B);background-size:200% auto;-webkit-background-clip:text;background-clip:text;color:transparent;animation:lightning-shimmer 4s linear infinite}
+@keyframes storm-glow{0%,100%{opacity:0.3;filter:blur(40px)}50%{opacity:0.7;filter:blur(60px)}}
+.animate-storm-glow{animation:storm-glow 5s ease-in-out infinite}
+@keyframes ethereal-glow{0%,100%{opacity:1;filter:brightness(1)}50%{opacity:0.7;filter:brightness(1.5)}}
+.ethereal-glow{animation:ethereal-glow 4s ease-in-out infinite}
+.reveal-thor{opacity:0;transform:translateY(28px);transition:opacity .8s ease,transform .8s cubic-bezier(.22,1,.36,1)}
+.reveal-thor.in-view{opacity:1;transform:translateY(0)}
+.kinetic-thor{opacity:0;filter:blur(8px);transform:translateY(26px) scale(.98);transition:opacity .9s,transform .9s cubic-bezier(.22,1,.36,1),filter .9s}
+.kinetic-thor.in-view{opacity:1;filter:blur(0);transform:translateY(0) scale(1)}
+.flashlight-card-thor{position:relative;background:rgba(26,20,16,.6);border:1px solid rgba(184,134,11,.2)}
+.flashlight-card-thor::before{content:"";position:absolute;inset:0;border-radius:inherit;background:radial-gradient(800px circle at var(--mx,50%) var(--my,50%),rgba(184,134,11,.15),transparent 40%);opacity:0;transition:opacity .5s;pointer-events:none;z-index:3}
+.flashlight-card-thor:hover::before{opacity:1}
+.ds-swatch-thor{border:1px solid rgba(184,134,11,.2);overflow:hidden}
+.ds-swatch-thor-color{height:80px}
+.ds-swatch-thor-info{padding:.75rem;background:rgba(26,20,16,.6)}
+.text-transparent-stroke-brass{-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px #B8860B}
+.text-transparent-stroke-bone{-webkit-text-fill-color:transparent;-webkit-text-stroke:1.5px rgba(232,220,196,.4)}
+@keyframes marquee-thor{from{transform:translateX(0)}to{transform:translateX(-100%)}}
+.marquee-thor-content{flex-shrink:0;display:flex;justify-content:space-around;min-width:100%;animation:marquee-thor 35s linear infinite}
+.carousel-slide-thor{position:absolute;inset:0;transition:opacity 1.5s ease-in-out;opacity:0;overflow:hidden}
+.carousel-slide-thor.active{opacity:1}
+.carousel-slide-thor img{transform:scale(1);transition:transform 10s ease-out}
+.carousel-slide-thor.active img{transform:scale(1.1)}
+@keyframes morph-thor{0%,100%{border-radius:60% 40% 30% 70%/60% 30% 70% 40%}50%{border-radius:30% 60% 70% 40%/50% 60% 30% 60%}}
+.animate-morph-thor{animation:morph-thor 8s ease-in-out infinite}
+@keyframes pulseGlow-thor{0%,100%{box-shadow:0 0 0 0 rgba(127,214,255,.1)}50%{box-shadow:0 0 40px 10px rgba(127,214,255,.2)}}
+.animate-pulse-glow-thor{animation:pulseGlow-thor 4s ease-in-out infinite}
+@keyframes spinSlow-thor{to{transform:rotate(360deg)}}
+.animate-spin-slow-thor{animation:spinSlow-thor 12s linear infinite}
+@keyframes float-thor{0%,100%{transform:translateY(0)}50%{transform:translateY(-12px)}}
+.animate-float-thor{animation:float-thor 8s ease-in-out infinite}
+.bg-dot-grid-thor{background-image:radial-gradient(circle,rgba(127,214,255,.15) 1px,transparent 1px);background-size:24px 24px}
+@media(prefers-reduced-motion:reduce){.anim-rise,.anim-scan,.particle,.arc-pulse,.reveal-thor,.kinetic-thor{animation:none!important;transition:none!important;opacity:1!important;transform:none!important;filter:none!important}}
+.modal-overlay-thor{position:fixed;inset:0;z-index:100;background:rgba(26,20,16,0.8);backdrop-filter:blur(8px);display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s}
+.modal-overlay-thor.active{opacity:1;pointer-events:all}
+.modal-content-thor{background:#1A1410;border:1px solid rgba(184,134,11,.3);max-width:500px;width:90%;padding:2rem;transform:translateY(20px) scale(0.95);transition:transform .4s cubic-bezier(0.34,1.56,0.64,1);box-shadow:0 25px 60px rgba(0,0,0,.6)}
+.modal-overlay-thor.active .modal-content-thor{transform:translateY(0) scale(1)}
+.tooltip-trigger-thor{position:relative}
+.tooltip-trigger-thor .tooltip-box-thor{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%) translateY(6px) scale(0.95);background:#1A1410;color:#B8860B;padding:6px 12px;font-size:.7rem;font-family:monospace;white-space:nowrap;pointer-events:none;opacity:0;transition:all .3s cubic-bezier(0.34,1.56,0.64,1);border:1px solid rgba(184,134,11,.3)}
+.tooltip-trigger-thor:hover .tooltip-box-thor{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}
+.medieval-card{position:relative;border:1px solid rgba(184,134,11,0.2);background:linear-gradient(135deg,rgba(26,20,16,0.8) 0%,rgba(11,15,25,0.8) 100%);box-shadow:inset 0 0 20px rgba(0,0,0,0.5)}
+.medieval-card::before,.medieval-card::after,.medieval-corners::before,.medieval-corners::after{content:'';position:absolute;width:16px;height:16px;border:1px solid rgba(184,134,11,0.5);pointer-events:none;transition:all 0.3s ease;z-index:2}
+.medieval-card::before,.medieval-corners::before{top:-2px;left:-2px;border-right:none;border-bottom:none}
+.medieval-card::after,.medieval-corners::after{bottom:-2px;right:-2px;border-left:none;border-top:none}
+.medieval-card:hover::before,.medieval-corners:hover::before{top:-6px;left:-6px}
+.medieval-card:hover::after,.medieval-corners:hover::after{bottom:-6px;right:-6px}
+.medieval-ornament{display:flex;align-items:center;justify-content:center;opacity:0.6;margin:3rem 0}
+.medieval-ornament::before,.medieval-ornament::after{content:'';height:1px;width:80px;background:linear-gradient(to right,transparent,#B8860B)}
+.medieval-ornament::after{background:linear-gradient(to left,transparent,#B8860B)}
+.medieval-ornament-center{width:12px;height:12px;border:1px solid #B8860B;transform:rotate(45deg);margin:0 20px}
+</style>
+</head>
+<body>
+<!-- Scroll Progress -->
+<div id="scroll-progress-thor" class="fixed top-0 left-0 h-[2px] w-full z-[100]" style="background:linear-gradient(90deg,#A61E2A,#B8860B,#7FD6FF);transform-origin:left;transform:scaleX(0)"></div>
+<!-- BG Layers -->
+<div class="fixed inset-0 vertical-streaks pointer-events-none z-0"></div>
+<div class="fixed inset-0 bg-runic pointer-events-none z-0 opacity-40"></div>
+<!-- Beams -->
+<div class="fixed inset-0 z-0 pointer-events-none flex max-w-7xl mx-auto opacity-30">
+<div class="flex-1 border-l border-white/[.03] relative overflow-hidden"></div>
+<div class="flex-1 border-l border-white/[.03] relative overflow-hidden"><div class="absolute top-0 -left-px w-px h-64 bg-gradient-to-b from-transparent via-th-cyan/40 to-transparent beam-t1"></div></div>
+<div class="flex-1 border-l border-white/[.03] relative overflow-hidden"><div class="absolute top-0 -left-px w-px h-96 bg-gradient-to-b from-transparent via-th-electric/30 to-transparent beam-t2"></div></div>
+<div class="flex-1 border-l border-white/[.03] relative overflow-hidden"><div class="absolute top-0 -left-px w-px h-48 bg-gradient-to-b from-transparent via-th-red/25 to-transparent beam-t3"></div></div>
+<div class="flex-1 border-x border-white/[.03] relative overflow-hidden"></div>
+</div>
+<!-- Nav -->
+<nav class="fixed top-0 w-full z-50 bg-[#1A1410]/80 backdrop-blur-xl border-b border-th-brass/20">
+<div class="max-w-7xl mx-auto px-6 md:px-10 h-20 flex items-center justify-between">
+<div class="flex items-center gap-4"><div class="w-2 h-2 bg-th-cyan animate-pulse" style="box-shadow:0 0 10px #7FD6FF"></div><span class="font-cinzel text-xs md:text-sm tracking-[.3em] uppercase text-white/90">Thor.Sys <span class="text-th-brass/60">// Design</span></span></div>
+<div class="hidden md:flex gap-10">
+<a href="#typography" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Typography</a>
+<a href="#colors" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Colors</a>
+<a href="#components" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Components</a>
+<a href="#icons" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Icons</a>
+<a href="#motion" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Motion</a>
+</div>
+</div>
+</nav>
+<main class="relative z-10">
+<!-- ═══ HERO ═══ -->
+<section class="relative min-h-screen flex items-end overflow-hidden border-b border-th-brass/20" id="hero">
+<div class="absolute inset-0">
+<div class="w-full h-full relative" id="hero-carousel-thor">
+<div class="carousel-slide-thor active"><img src="assets/hero-storm.png" alt="" class="w-full h-full object-cover opacity-50 mix-blend-luminosity"/></div>
+<div class="carousel-slide-thor"><img src="assets/hero-energy.png" alt="" class="w-full h-full object-cover opacity-50 mix-blend-luminosity"/></div>
+<div class="carousel-slide-thor"><img src="assets/hero-runes.png" alt="" class="w-full h-full object-cover opacity-50 mix-blend-luminosity"/></div>
+</div>
+<div class="absolute inset-0 bg-gradient-to-b from-[#0a0f17]/60 via-[#0a0f17]/40 to-[#0a0f17]"></div>
+<div class="absolute inset-0" style="background:radial-gradient(ellipse at 30% 60%,rgba(184,134,11,.2) 0%,transparent 60%)"></div>
+<div class="absolute inset-0" style="background:radial-gradient(ellipse at 70% 30%,rgba(166,30,42,.08) 0%,transparent 50%)"></div>
+</div>
+<!-- Storm glow -->
+<div class="animate-storm-glow absolute bottom-[-15%] left-[25%] w-[400px] h-[400px] pointer-events-none z-5" style="background:radial-gradient(circle,rgba(127,214,255,.3),transparent 70%)"></div>
+<!-- Particles -->
+<div class="absolute inset-0 pointer-events-none z-10">
+<div class="absolute top-1/4 left-1/4 w-1 h-1 rounded-full bg-th-cyan particle"></div>
+<div class="absolute top-1/3 right-1/3 w-1.5 h-1.5 rounded-full bg-th-cyan particle" style="animation-delay:1s"></div>
+<div class="absolute top-2/3 left-1/2 w-1 h-1 rounded-full bg-th-electric particle" style="animation-delay:2s"></div>
+<div class="absolute bottom-1/4 right-1/4 w-1 h-1 rounded-full bg-th-red particle" style="animation-delay:.5s"></div>
+<div class="absolute top-1/2 left-[10%] w-0.5 h-0.5 rounded-full bg-th-frost particle" style="animation-delay:3s"></div>
+<div class="absolute top-[20%] right-[15%] w-1 h-1 rounded-full bg-th-scarlet particle" style="animation-delay:1.5s"></div>
+</div>
+<!-- Arc reactor → Bifrost ring -->
+<div class="absolute top-1/2 right-16 -translate-y-1/2 w-64 h-64 rounded-full border border-th-cyan/10 arc-pulse hidden lg:block pointer-events-none z-10"><div class="absolute inset-4 rounded-full border border-th-cyan/5"></div><div class="absolute inset-8 rounded-full border border-th-brass/10"></div><div class="absolute inset-[45%] rounded-full bg-th-cyan/10"></div></div>
+<!-- Hero Text -->
+<div class="relative z-20 pb-16 pl-6 md:pl-12 lg:pl-16 max-w-4xl anim-rise">
+<div class="flex items-center gap-3 mb-6">
+  <iconify-icon icon="solar:star-fall-linear" class="text-th-electric" width="20"></iconify-icon>
+  <span class="font-cinzel text-[10px] tracking-[.4em] uppercase text-th-electric">First Epoch</span>
+  <span class="w-12 h-[1px] bg-gradient-to-r from-th-electric to-transparent"></span>
+</div>
+<h1 class="font-cinzel text-white uppercase leading-[1.1] tracking-tight text-4xl md:text-6xl lg:text-8xl kinetic-thor in-view" style="text-shadow:0 0 80px rgba(127,214,255,.15)">
+<span class="text-reveal-wrapper"><span class="text-reveal-content delay-200 text-white">Thor</span></span><br/>
+<span class="text-transparent-stroke-brass">Design</span>
+<span class="text-transparent-stroke-bone">System.</span>
+</h1>
+<p class="mt-8 text-sm md:text-base text-th-bone/80 font-light tracking-wide max-w-xl" style="border-left:2px solid #B8860B;padding-left:1rem">Canonical reference for typography, color tokens, UI components, motion behaviors and interaction patterns. Forged in the heart of the storm.</p>
+<div class="mt-10 flex flex-col sm:flex-row items-start gap-4">
+<a href="#typography" class="medieval-corners group relative inline-flex items-center gap-3 font-cinzel font-medium text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-electric bg-th-electric/10 text-th-cyan hover:bg-th-electric hover:text-white transition-all duration-300"><span>Browse Tokens</span><iconify-icon icon="solar:alt-arrow-right-linear" width="18"></iconify-icon></a>
+<a href="#components" class="medieval-corners relative inline-flex items-center gap-3 border border-th-brass/30 bg-transparent text-white font-cinzel font-medium text-xs uppercase tracking-[.2em] px-8 py-4 hover:border-th-cyan/30 hover:bg-th-cyan/5 transition-all"><span>View Components</span><iconify-icon icon="solar:code-scan-linear" width="18"></iconify-icon></a>
+</div>
+</div>
+<!-- Hero HUD -->
+<div class="absolute bottom-12 right-6 lg:right-16 z-30 flex flex-col items-end gap-2 text-right pointer-events-none opacity-80">
+<p class="font-cinzel text-xs tracking-[.3em] text-th-brass/70 uppercase">Realm Records</p>
+<div class="flex gap-4 text-xs font-cinzel italic mt-2 text-th-bone/50"><span>~ RUNES ~</span><span>~ AURAS ~</span><span>~ MAGIC ~</span></div>
+</div>
+<!-- Stats sidebar -->
+<div class="absolute top-1/2 -translate-y-1/2 right-0 z-20 hidden xl:flex flex-col border-l border-th-brass/20">
+<div class="p-6 border-b border-th-brass/20 text-center reveal-thor" data-r><p class="text-3xl font-cinzel text-th-cyan">06</p><p class="font-cinzel text-[9px] text-th-brass/50 tracking-[.2em] uppercase mt-1">Sections</p></div>
+<div class="p-6 border-b border-th-brass/20 text-center reveal-thor" data-r><p class="text-3xl font-cinzel text-th-electric">10</p><p class="font-cinzel text-[9px] text-th-brass/50 tracking-[.2em] uppercase mt-1">Colors</p></div>
+<div class="p-6 text-center reveal-thor" data-r><p class="text-3xl font-cinzel text-th-red">14</p><p class="font-cinzel text-[9px] text-th-brass/50 tracking-[.2em] uppercase mt-1">Animations</p></div>
+</div>
+</section>
+
+<!-- Marquee Divider -->
+<div class="border-b border-th-brass/20 overflow-hidden py-5 bg-[#0d1420]">
+<div class="flex overflow-hidden select-none">
+<div class="marquee-thor-content">
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Thor Runic Codex</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Typography · Colors · Components · Motion</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Forged in the Storm</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+</div>
+<div class="marquee-thor-content">
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Thor Runic Codex</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Typography · Colors · Components · Motion</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">Forged in the Storm</span>
+<span class="text-sm font-mono uppercase tracking-widest text-th-bone/50/40 mx-8">•</span>
+</div>
+</div>
+</div>
+
+<!-- Transparent Lettering Showcase -->
+<section class="relative z-10 py-24 border-b border-th-brass/20 overflow-hidden bg-dot-grid-thor">
+<div class="flex flex-col items-center gap-2 reveal-thor" data-r>
+<h1 class="text-7xl md:text-9xl font-cinzel font-bold tracking-tighter text-transparent-stroke-brass">
+<span class="text-reveal-wrapper"><span class="text-reveal-content">Storm</span></span>
+</h1>
+<div class="flex items-center gap-4 md:gap-8">
+<h1 class="text-7xl md:text-9xl font-cinzel font-bold tracking-tighter text-white">
+<span class="text-reveal-wrapper"><span class="text-reveal-content delay-100">Force</span></span>
+</h1>
+<div class="w-14 h-14 md:w-20 md:h-20 border border-th-cyan rounded-full flex items-center justify-center bg-transparent hover:bg-th-cyan hover:text-[#0a0f17] transition-all duration-500 cursor-pointer group">
+<iconify-icon class="text-2xl md:text-4xl group-hover:rotate-45 transition-transform duration-500 text-th-cyan group-hover:text-[#0a0f17]" icon="solar:arrow-right-down-linear"></iconify-icon>
+</div>
+</div>
+<h1 class="text-7xl md:text-9xl font-cinzel font-bold tracking-tighter text-transparent-stroke-bone">
+<span class="text-reveal-wrapper"><span class="text-reveal-content delay-200">Asgard</span></span>
+</h1>
+</div>
+<div class="absolute top-10 right-[10%] opacity-15 animate-float-thor pointer-events-none">
+<iconify-icon class="text-9xl text-th-cyan" icon="solar:bolt-circle-linear"></iconify-icon>
+</div>
+</section>
+<!-- ═══ TYPOGRAPHY ═══ -->
+<section class="py-24 px-6 md:px-12 lg:px-24 border-b border-th-brass/20" id="typography">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 reveal-thor" data-r><p class="font-cinzel text-xs uppercase tracking-[.4em] mb-4 flex items-center gap-3 text-th-cyan"><span class="w-8 h-px bg-gradient-to-r from-transparent to-th-brass"></span>01 // Typography</p><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Type Scale &amp; Hierarchy</h2><p class="text-sm text-th-brass/70 mt-4 max-w-xl">Font families: Cinzel (display / 400–900), Inter (body / 300–700), system monospace. CDN via Google Fonts.</p></div>
+<div class="medieval-card p-6 md:p-10 space-y-0 reveal-thor" data-r>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">H1 / Display</span><div class="flex-1 px-6"><h1 class="font-cinzel text-white uppercase leading-[1.1] tracking-tight text-4xl md:text-6xl">Heading One</h1></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 500 / 4.5rem / 1.1 / -0.02em</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">H1 Gradient</span><div class="flex-1 px-6"><h1 class="font-cinzel uppercase leading-[1.1] tracking-tight text-4xl md:text-6xl text-transparent bg-clip-text" style="background-image:linear-gradient(90deg,#3A7CA5,#7FD6FF)">Gradient H1</h1></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">electric→cyan</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">H1 Outline</span><div class="flex-1 px-6"><h1 class="font-cinzel uppercase leading-[1.1] tracking-tight text-4xl md:text-6xl text-transparent-stroke-brass">Outline H1</h1></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">stroke 1.5px #7FD6FF</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Heading 2</span><div class="flex-1 px-6"><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Heading Two</h2></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 500 / 3rem / tight / uppercase</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Heading 3</span><div class="flex-1 px-6"><h3 class="text-xl font-cinzel font-medium tracking-tight uppercase">Heading Three</h3></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 500 / 1.25rem / tight</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Heading 4</span><div class="flex-1 px-6"><h4 class="text-lg font-cinzel font-medium tracking-tight uppercase">Heading Four</h4></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 500 / 1.125rem</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Heading 5</span><div class="flex-1 px-6"><h5 class="text-base font-cinzel font-medium uppercase">Heading Five</h5></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 500 / 1rem</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Heading 6</span><div class="flex-1 px-6"><h6 class="text-sm font-cinzel font-bold uppercase tracking-widest">Category Label</h6></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel 700 / 0.875rem / 0.15em</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Body Large</span><div class="flex-1 px-6"><p class="text-lg text-th-bone/80 font-light leading-relaxed">Body large text for hero descriptions and important content blocks. Inter Light weight for readability.</p></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Inter 300 / 1.125rem / 1.7</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Body</span><div class="flex-1 px-6"><p class="text-sm text-th-bone/70 font-light leading-relaxed">Standard body text used for descriptions and longer content. Optimized for dark background readability.</p></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Inter 300 / 0.875rem / 1.6</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Body Small</span><div class="flex-1 px-6"><p class="text-xs text-th-brass/70 font-light leading-relaxed">Helper text and captions for supporting content and auxiliary labels.</p></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Inter 300 / 0.75rem / 1.5</span></div>
+<div class="flex items-baseline justify-between py-5 border-b border-th-brass/10"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Caption</span><div class="flex-1 px-6"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Micro label text — Cinzel caps</p></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Cinzel / 10px / 0.2em / uppercase</span></div>
+<div class="flex items-baseline justify-between py-5"><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 min-w-[100px]">Mono</span><div class="flex-1 px-6"><p class="font-mono text-xs tracking-widest text-th-brass/50">[ ASGARD ] [ BIFROST ] [ MJOLNIR ]</p></div><span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 text-right hidden md:block">Monospace / 0.75rem / widest</span></div>
+</div>
+</div>
+</section>
+<!-- ═══ COLORS ═══ -->
+<section class="py-24 px-6 md:px-12 lg:px-24 border-b border-th-brass/20 bg-[#0d1420]/30" id="colors">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 reveal-thor" data-r><p class="font-cinzel text-xs uppercase tracking-[.4em] mb-4 flex items-center gap-3 text-th-cyan"><span class="w-8 h-px bg-gradient-to-r from-transparent to-th-brass"></span>02 // Colors</p><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Palette &amp; Surfaces</h2></div>
+
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-4 reveal-thor" data-r>🎨 Primary (Azul Tempestade)</p>
+<div class="grid grid-cols-2 md:grid-cols-5 gap-4 mb-10 reveal-thor" data-r>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#1F2A38"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Storm Deep</p><p class="text-xs text-th-bone/70 mt-1">#1F2A38</p><p class="text-[10px] text-th-brass/50">rgb(31,42,56) · hsl(215,29%,17%)</p><p class="text-[10px] text-th-brass/50 mt-1">Background / Base</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#B8860B"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Electric</p><p class="text-xs text-th-bone/70 mt-1">#B8860B</p><p class="text-[10px] text-th-brass/50">rgb(184,134,11) · hsl(203,48%,44%)</p><p class="text-[10px] text-th-brass/50 mt-1">Primary / Interactive</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#7FD6FF"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Cyan Lightning</p><p class="text-xs text-th-bone/70 mt-1">#7FD6FF</p><p class="text-[10px] text-th-brass/50">rgb(127,214,255) · hsl(199,100%,75%)</p><p class="text-[10px] text-th-brass/50 mt-1">Accent / Hover / Glow</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#B8860B"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Brass</p><p class="text-xs text-th-bone/70 mt-1">#B8860B</p><p class="text-[10px] text-th-brass/50">rgb(184,134,11)</p><p class="text-[10px] text-th-brass/50 mt-1">Secondary / Muted</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#7FD6FF"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Uru Gold</p><p class="text-xs text-th-bone/70 mt-1">#7FD6FF</p><p class="text-[10px] text-th-brass/50">rgb(127,214,255)</p><p class="text-[10px] text-th-cyan/50 mt-1">Highlights / Accents</p></div></div>
+</div>
+
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-4 reveal-thor" data-r>🔴 Destaque (Vermelho Capa)</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 reveal-thor" data-r>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#A61E2A"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Cape Intense</p><p class="text-xs text-th-bone/70 mt-1">#A61E2A</p><p class="text-[10px] text-th-brass/50">rgb(166,30,42)</p><p class="text-[10px] text-th-red/50 mt-1">CTA / Focus / Danger</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#D94A4A"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Scarlet Soft</p><p class="text-xs text-th-bone/70 mt-1">#D94A4A</p><p class="text-[10px] text-th-brass/50">rgb(217,74,74)</p><p class="text-[10px] text-th-red/50 mt-1">Hover / Warning</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:rgba(166,30,42,.15)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Red 15%</p><p class="text-xs text-th-bone/70 mt-1">rgba(166,30,42,.15)</p><p class="text-[10px] text-th-red/50 mt-1">Button BG tint</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:rgba(166,30,42,.05)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Red 5%</p><p class="text-xs text-th-bone/70 mt-1">rgba(166,30,42,.05)</p><p class="text-[10px] text-th-red/50 mt-1">Decorative</p></div></div>
+</div>
+
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-4 reveal-thor" data-r>⚡ Energia / Luz</p>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10 reveal-thor" data-r>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#E8DCC4"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Frost White</p><p class="text-xs text-th-bone/70 mt-1">#E8DCC4</p><p class="text-[10px] text-th-brass/50">rgb(234,244,255)</p><p class="text-[10px] text-th-brass/50 mt-1">Headings / High contrast</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#7FD6FF"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Neon Blue</p><p class="text-xs text-th-bone/70 mt-1">#7FD6FF</p><p class="text-[10px] text-th-brass/50">rgb(127,214,255)</p><p class="text-[10px] text-th-brass/50 mt-1">Energy glow / Neon</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:rgba(127,214,255,.1)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Cyan 10%</p><p class="text-xs text-th-bone/70 mt-1">rgba(127,214,255,.1)</p><p class="text-[10px] text-th-brass/50 mt-1">Card BG / Surface</p></div></div>
+</div>
+
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-4 reveal-thor" data-r>Semantic</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 reveal-thor" data-r>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#2ECC71"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Success</p><p class="text-xs text-th-bone/70 mt-1">#2ECC71</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#F39C12"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Warning</p><p class="text-xs text-th-bone/70 mt-1">#F39C12</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#D94A4A"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Error</p><p class="text-xs text-th-bone/70 mt-1">#D94A4A</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:#7FD6FF"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Info</p><p class="text-xs text-th-bone/70 mt-1">#7FD6FF</p></div></div>
+</div>
+
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-4 reveal-thor" data-r>Gradients</p>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-4 mb-10 reveal-thor" data-r>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:linear-gradient(90deg,#3A7CA5,#7FD6FF)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Storm</p><p class="text-xs text-th-bone/70 mt-1">electric → cyan</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:linear-gradient(90deg,#A61E2A,#B8860B,#7FD6FF)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Bifrost</p><p class="text-xs text-th-bone/70 mt-1">red → electric → cyan</p></div></div>
+<div class="ds-swatch-thor"><div class="ds-swatch-thor-color" style="background:linear-gradient(180deg,rgba(127,214,255,.1),transparent)"></div><div class="ds-swatch-thor-info"><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Card Hover</p><p class="text-xs text-th-bone/70 mt-1">cyan/10 → ∅</p></div></div>
+</div>
+</div>
+</section>
+<!-- ═══ COMPONENTS ═══ -->
+<section class="py-24 px-6 md:px-12 lg:px-24 border-b border-th-brass/20" id="components">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 reveal-thor" data-r><p class="font-cinzel text-xs uppercase tracking-[.4em] mb-4 flex items-center gap-3 text-th-cyan"><span class="w-8 h-px bg-gradient-to-r from-transparent to-th-brass"></span>03 // Components</p><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Buttons, Cards &amp; More</h2></div>
+
+<!-- Buttons -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-6 reveal-thor" data-r>Buttons</p>
+<div class="space-y-6 mb-16">
+<div class="medieval-card p-6 reveal-thor" data-r>
+<p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 mb-4">Primary CTA (Storm)</p>
+<div class="flex flex-wrap gap-4">
+<a href="#" class="medieval-corners group relative inline-flex items-center gap-3 font-cinzel font-medium text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-electric bg-th-electric/10 text-th-cyan hover:bg-th-electric hover:text-white transition-all duration-300"><span>Summon Lightning</span><iconify-icon icon="solar:alt-arrow-right-linear" width="18"></iconify-icon></a>
+</div></div>
+<div class="medieval-card p-6 reveal-thor" data-r>
+<p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 mb-4">Secondary / Ghost</p>
+<div class="flex flex-wrap gap-4">
+<a href="#" class="medieval-corners relative inline-flex items-center gap-3 border border-th-brass/30 text-white font-cinzel text-xs uppercase tracking-[.2em] px-8 py-4 hover:border-th-cyan/30 hover:bg-th-cyan/5 transition-all"><span>View Realms</span><iconify-icon icon="solar:code-scan-linear" width="18"></iconify-icon></a>
+</div></div>
+<div class="medieval-card p-6 reveal-thor" data-r>
+<p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 mb-4">Danger / Red CTA</p>
+<div class="flex flex-wrap gap-4">
+<a href="#" class="medieval-corners relative inline-flex items-center gap-3 font-cinzel text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-red bg-th-red/10 text-th-scarlet hover:bg-th-red hover:text-white transition-all duration-300"><span>Destroy Target</span><iconify-icon icon="solar:alt-arrow-right-linear" width="18"></iconify-icon></a>
+<a href="#" class="medieval-corners relative inline-flex items-center gap-2 font-cinzel text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-brass/30 bg-white/5 text-white hover:bg-white/10 transition-colors">Init Process</a>
+</div></div>
+<div class="medieval-card p-6 reveal-thor" data-r>
+<p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 mb-4">Beam Effect (Shimmer)</p>
+<div class="flex flex-wrap gap-4">
+<button class="medieval-corners relative overflow-hidden bg-th-storm text-white border border-th-brass/30 cursor-pointer px-8 py-4 font-cinzel text-xs uppercase tracking-[.2em] transition-all duration-400 inline-flex items-center gap-3 group" style="box-shadow:0 0 20px rgba(184,134,11,.1)">
+<span class="relative z-10 flex items-center gap-3">Beam Storm<iconify-icon icon="solar:bolt-circle-linear" width="18"></iconify-icon></span>
+<div class="absolute inset-0 overflow-hidden opacity-0 group-hover:opacity-100 transition-opacity"><div class="absolute top-0 left-0 w-full h-full" style="background:linear-gradient(90deg,transparent,rgba(127,214,255,.15),transparent);transform:translateX(-100%) skewX(-15deg);animation:none"></div></div>
+</button>
+</div></div>
+<div class="medieval-card p-6 reveal-thor" data-r>
+<p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 mb-4">Inverted / Hero</p>
+<div class="flex flex-wrap gap-4">
+<a href="#" class="medieval-corners relative inline-flex items-center justify-center gap-3 bg-th-frost text-[#0a0f17] font-cinzel font-medium text-sm uppercase tracking-[.2em] px-12 py-5 hover:bg-th-cyan transition-all duration-300"><span>Mjolnir.init()</span><iconify-icon icon="solar:terminal-linear" width="20"></iconify-icon></a>
+</div></div>
+</div>
+
+<!-- Inputs -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-6 reveal-thor" data-r>Inputs &amp; Badges</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-16">
+<div class="medieval-card p-6 reveal-thor" data-r>
+<label class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 block mb-3">Text Input</label>
+<input class="w-full max-w-sm px-4 py-3 bg-[#0d1420] border border-th-brass/30 text-sm text-th-frost placeholder-neutral-600 focus:outline-none focus:border-th-electric focus:ring-1 focus:ring-th-electric/30 transition-all font-inter" placeholder="Enter command..." type="text"/>
+<label class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 block mt-4 mb-3">Textarea</label>
+<textarea class="w-full max-w-sm px-4 py-3 bg-[#0d1420] border border-th-brass/30 text-sm text-th-frost placeholder-neutral-600 focus:outline-none focus:border-th-electric focus:ring-1 focus:ring-th-electric/30 transition-all resize-none font-inter" rows="3" placeholder="Describe the realm..."></textarea>
+</div>
+<div class="medieval-card p-6 reveal-thor" data-r>
+<label class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 block mb-3">Badges</label>
+<div class="flex flex-wrap gap-2 mb-4">
+<span class="px-3 py-1 bg-th-electric text-white text-xs font-mono uppercase">Solid</span>
+<span class="px-3 py-1 border border-th-cyan text-th-cyan text-xs font-mono uppercase">Outline</span>
+<span class="px-3 py-1 bg-th-storm text-th-bone/80 text-xs font-mono uppercase">Neutral</span>
+<span class="px-3 py-1 bg-th-red/20 text-th-scarlet text-xs font-mono uppercase">Danger</span>
+</div>
+<div class="flex flex-wrap gap-2 bg-th-storm/50 p-4 max-w-max border border-th-brass/20">
+<span class="px-3 py-1 border border-th-cyan/30 text-xs font-mono uppercase backdrop-blur-md text-th-cyan">Glass</span>
+<span class="px-3 py-1 border border-th-brass/30 text-xs font-mono uppercase backdrop-blur-md text-white/50">Ghost</span>
+</div>
+<label class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 block mt-4 mb-3">Tooltip</label>
+<div class="tooltip-trigger-thor inline-block">
+<button class="medieval-corners relative px-4 py-2 bg-th-storm border border-th-brass/30 text-sm text-th-bone/80 hover:border-th-brass/30 transition-colors font-inter">Hover me</button>
+<div class="tooltip-box-thor">Storm tooltip</div>
+</div>
+</div>
+</div>
+
+<!-- Cards -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-6 reveal-thor" data-r>Cards</p>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-10">
+<div class="flashlight-card-thor group p-6 flex flex-col justify-between min-h-[320px] cursor-crosshair reveal-thor" data-r onmousemove="let r=this.getBoundingClientRect();this.style.setProperty('--mx',(event.clientX-r.left)+'px');this.style.setProperty('--my',(event.clientY-r.top)+'px')">
+<div class="absolute inset-0 bg-gradient-to-b from-th-electric/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-0"></div>
+<div class="absolute inset-0 border border-th-cyan opacity-0 group-hover:anim-flash pointer-events-none transition-opacity duration-300"></div>
+<div class="relative z-10">
+<div class="flex justify-between items-start mb-12"><div class="w-10 h-10 border border-th-brass/30 bg-[#1A1410] flex items-center justify-center text-th-cyan group-hover:scale-110 transition-transform duration-500"><iconify-icon icon="solar:bolt-circle-linear" width="24"></iconify-icon></div><span class="font-cinzel text-xs tracking-[.2em] text-th-brass/50 border border-th-brass/20 px-2 py-1 uppercase ethereal-glow">Live</span></div>
+<h3 class="text-xl font-cinzel font-medium tracking-tight mb-2 uppercase group-hover:text-th-cyan transition-colors">Storm Protocol</h3>
+<p class="text-xs text-th-brass/70 font-light leading-relaxed">Runic plate with lightning flash on hover. Tracks mouse position.</p>
+</div>
+<div class="relative z-10 flex items-center gap-2 font-cinzel text-xs tracking-[.2em] uppercase mt-8 opacity-50 group-hover:opacity-100 transition-opacity text-th-cyan">Initialize <iconify-icon icon="solar:arrow-right-linear" width="16"></iconify-icon></div>
+</div>
+<div class="group medieval-card backdrop-blur-xl p-8 reveal-thor" data-r>
+<div class="absolute top-0 left-0 w-[2px] h-0 group-hover:h-full transition-all duration-500 ease-out bg-th-cyan"></div>
+<iconify-icon icon="solar:shield-star-linear" width="32" class="text-th-electric mb-6"></iconify-icon>
+<h3 class="text-xl font-cinzel tracking-tight uppercase mb-3">Uru Plate</h3>
+<p class="text-xs text-th-brass/70 font-light leading-relaxed">Glassmorphism with left-border reveal.</p>
+<div class="flex gap-4 mt-6 pt-4 border-t border-th-brass/20"><div><p class="text-2xl font-cinzel text-th-cyan">97%</p><p class="text-[10px] text-th-brass/70 uppercase tracking-widest">Shield</p></div><div><p class="text-2xl font-cinzel text-th-electric">MK1</p><p class="text-[10px] text-th-brass/70 uppercase tracking-widest">Version</p></div></div>
+</div>
+<div class="medieval-card p-8 group hover:border-th-electric transition-colors duration-500 reveal-thor" data-r>
+<iconify-icon icon="solar:quote-left-linear" width="24" class="text-white/10 absolute top-6 right-6"></iconify-icon>
+<p class="text-sm text-th-bone/70 font-light leading-relaxed mb-8 relative z-10">"Testimonial card with quote icon and cyan border hover effect."</p>
+<div class="flex items-center gap-4 border-t border-th-brass/20 pt-6 mt-auto"><div class="w-10 h-10 border border-th-brass/30 bg-th-storm flex items-center justify-center"><iconify-icon icon="solar:user-circle-linear" width="20" class="text-th-cyan"></iconify-icon></div><div><p class="font-cinzel text-xs tracking-[.1em] uppercase">Odin Allfather</p><p class="font-cinzel text-xs tracking-[.2em] uppercase mt-1 text-th-electric">King of Asgard</p></div></div>
+</div>
+</div>
+
+<!-- Data + Progress -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mt-12 mb-6 reveal-thor" data-r>Data Cells</p>
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-10 reveal-thor" data-r>
+<div class="medieval-card p-5"><p class="font-cinzel text-[10px] text-th-brass/70 uppercase tracking-[.2em]">Bifrost Power</p><p class="text-2xl mt-2 font-cinzel text-th-cyan">8.4GW</p></div>
+<div class="medieval-card p-5"><p class="font-cinzel text-[10px] text-th-brass/70 uppercase tracking-[.2em]">Realm Shield</p><p class="text-2xl mt-2 font-cinzel text-th-cyan">99.2%</p></div>
+<div class="medieval-card p-5"><p class="font-cinzel text-[10px] text-th-brass/70 uppercase tracking-[.2em]">Storm Level</p><p class="text-2xl mt-2 font-cinzel text-th-red">MAX</p></div>
+<div class="medieval-card p-5"><p class="font-cinzel text-[10px] text-th-brass/70 uppercase tracking-[.2em]">Heimdall</p><p class="text-2xl mt-2 font-cinzel text-green-400">Online</p></div>
+</div>
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mb-6 reveal-thor" data-r>Progress Bars</p>
+<div class="medieval-card p-6 space-y-5 reveal-thor" data-r>
+<div><div class="flex justify-between font-cinzel text-xs mb-2 tracking-widest uppercase text-th-cyan"><span>Mjolnir Charge</span><span>92%</span></div><div class="h-[2px] w-full bg-white/5 relative overflow-hidden"><div class="absolute top-0 left-0 h-full w-[92%] bg-th-electric" style="box-shadow:0 0 10px rgba(184,134,11,.5)"></div></div></div>
+<div><div class="flex justify-between font-cinzel text-xs uppercase tracking-[.2em] text-th-bone/70 mb-2"><span>Storm Intensity</span><span>78%</span></div><div class="h-[2px] bg-white/10"><div class="h-full w-[78%] bg-th-cyan"></div></div></div>
+<div><div class="flex justify-between font-cinzel text-xs uppercase tracking-[.2em] text-th-bone/70 mb-2"><span>Bifrost Spectrum</span><span>100%</span></div><div class="h-[2px] bg-white/10"><div class="h-full w-full" style="background:linear-gradient(90deg,#A61E2A,#B8860B,#7FD6FF)"></div></div></div>
+</div>
+
+<!-- Navbar Preview -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mt-12 mb-6 reveal-thor" data-r>Navbar</p>
+<div class="medieval-card backdrop-blur-xl reveal-thor" data-r>
+<div class="flex justify-between items-center px-6 py-4">
+<div class="flex items-center gap-3"><div class="w-2 h-2 bg-th-cyan animate-pulse"></div><span class="font-cinzel text-sm tracking-[.2em] uppercase">ASGARD.CORE</span></div>
+<div class="flex items-center gap-8">
+<a href="#" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Realms</a>
+<a href="#" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Warriors</a>
+<a href="#" class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 hover:text-th-cyan transition-colors">Bifrost</a>
+</div>
+</div>
+</div>
+
+<!-- Modal -->
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mt-12 mb-6 reveal-thor" data-r>Modal</p>
+<button class="medieval-corners relative font-cinzel text-xs uppercase tracking-[.2em] px-8 py-4 border border-th-electric bg-th-electric/10 text-th-cyan hover:bg-th-electric hover:text-white transition-all reveal-thor" data-r onclick="document.getElementById('demo-modal-thor').classList.add('active')">Open Modal</button>
+</div>
+</section>
+
+<!-- Modal Overlay -->
+<div class="modal-overlay-thor" id="demo-modal-thor" onclick="if(event.target===this)this.classList.remove('active')">
+<div class="modal-content-thor">
+<div class="flex justify-between items-center mb-6"><h3 class="text-xl font-cinzel uppercase tracking-tight">Confirm Action</h3><button class="w-8 h-8 flex items-center justify-center hover:bg-white/5 transition-colors text-th-cyan" onclick="document.getElementById('demo-modal-thor').classList.remove('active')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button></div>
+<p class="text-th-bone/70 text-sm leading-relaxed mb-6">Modal component with elastic entrance animation and backdrop blur on the Storm theme.</p>
+<div class="flex gap-3 justify-end">
+<button class="px-4 py-2 text-sm text-th-bone/70 hover:bg-white/5 transition-colors font-inter" onclick="document.getElementById('demo-modal-thor').classList.remove('active')">Cancel</button>
+<button class="px-4 py-2 bg-th-electric text-white text-sm hover:bg-th-cyan transition-colors font-inter">Confirm</button>
+</div>
+</div>
+</div>
+<!-- ═══ ICONS ═══ -->
+<section class="py-24 px-6 md:px-12 lg:px-24 border-b border-th-brass/20" id="icons">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 reveal-thor" data-r><p class="font-cinzel text-xs uppercase tracking-[.4em] mb-4 flex items-center gap-3 text-th-cyan"><span class="w-8 h-px bg-gradient-to-r from-transparent to-th-brass"></span>04 // Icons</p><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Iconography</h2><p class="text-xs text-th-bone/70 mt-4">Solar Linear via Iconify CDN. 24px grid, consistent 2px stroke.</p></div>
+<div class="grid grid-cols-3 sm:grid-cols-4 md:grid-cols-6 gap-4 reveal-thor" data-r>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:bolt-circle-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">bolt</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:shield-star-linear" width="24" class="text-th-electric group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">shield</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:cpu-bolt-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">cpu</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:chart-square-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">chart</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:terminal-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">terminal</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:rocket-2-linear" width="24" class="text-th-electric group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">rocket</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:eye-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">eye</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:code-scan-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">code-scan</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:play-circle-linear" width="24" class="text-th-electric group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">play</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:user-circle-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">user</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:settings-linear" width="24" class="text-th-cyan group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">settings</span></div>
+<div class="medieval-card p-4 flex flex-col items-center gap-3 hover:border-th-brass/30 hover:bg-th-storm/30 transition-all group"><iconify-icon icon="solar:alt-arrow-right-linear" width="24" class="text-th-electric group-hover:scale-110 transition-transform"></iconify-icon><span class="font-cinzel text-[10px] text-th-brass/70">arrow</span></div>
+</div>
+<p class="font-cinzel text-xs uppercase tracking-[.3em] text-th-brass/70 mt-10 mb-4 reveal-thor" data-r>Size Variants</p>
+<div class="flex items-end gap-8 reveal-thor" data-r>
+<div class="flex flex-col items-center gap-2"><iconify-icon icon="solar:bolt-circle-linear" width="16" class="text-th-cyan"></iconify-icon><span class="text-[10px] text-th-brass/70">16</span></div>
+<div class="flex flex-col items-center gap-2"><iconify-icon icon="solar:bolt-circle-linear" width="20" class="text-th-cyan"></iconify-icon><span class="text-[10px] text-th-brass/70">20</span></div>
+<div class="flex flex-col items-center gap-2"><iconify-icon icon="solar:bolt-circle-linear" width="24" class="text-th-cyan"></iconify-icon><span class="text-[10px] text-th-brass/70">24</span></div>
+<div class="flex flex-col items-center gap-2"><iconify-icon icon="solar:bolt-circle-linear" width="32" class="text-th-cyan"></iconify-icon><span class="text-[10px] text-th-brass/70">32</span></div>
+<div class="flex flex-col items-center gap-2"><iconify-icon icon="solar:bolt-circle-linear" width="40" class="text-th-cyan"></iconify-icon><span class="text-[10px] text-th-brass/70">40</span></div>
+</div>
+</div>
+</section>
+
+<!-- ═══ MOTION ═══ -->
+<section class="py-24 px-6 md:px-12 lg:px-24 border-b border-th-brass/20 bg-[#0d1420]/30" id="motion">
+<div class="max-w-7xl mx-auto">
+<div class="mb-12 reveal-thor" data-r><p class="font-cinzel text-xs uppercase tracking-[.4em] mb-4 flex items-center gap-3 text-th-cyan"><span class="w-8 h-px bg-gradient-to-r from-transparent to-th-brass"></span>05 // Motion</p><h2 class="text-3xl md:text-5xl font-cinzel font-medium tracking-tight uppercase">Animation Gallery</h2></div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Lightning Flash</p><div class="w-full h-[2px] bg-white/5 relative overflow-hidden"><div class="h-full w-full anim-flash bg-th-cyan"></div></div><p class="text-xs text-th-brass/70">4s infinite flash</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Bifrost Pulse</p><div class="w-16 h-16 rounded-full border border-th-cyan/30 flex items-center justify-center arc-pulse"><div class="w-4 h-4 rounded-full bg-th-cyan"></div></div><p class="text-xs text-th-brass/70">3s box-shadow pulse</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Lightning Shimmer</p><span class="font-cinzel text-xl uppercase lightning-shimmer">ASGARD</span><p class="text-xs text-th-brass/70">4s background-position</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Hover Border</p><div class="w-full border border-th-brass/30 transition-colors duration-500 p-4 cursor-pointer hover:border-th-cyan"><span class="text-xs text-th-brass/70">Hover me — 500ms</span></div><p class="text-xs text-th-brass/70">border-color transition</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Left Border Grow</p><div class="w-full bg-[#1A1410] p-4 group relative overflow-hidden cursor-pointer border border-th-brass/30"><div class="absolute top-0 left-0 w-[2px] h-0 group-hover:h-full transition-all duration-500 ease-out bg-th-cyan"></div><span class="text-xs text-th-brass/70">Hover me — h:0→full</span></div><p class="text-xs text-th-brass/70">height transition 500ms</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Status Indicators</p><div class="flex items-center gap-4"><div class="w-2 h-2 animate-pulse bg-th-cyan" style="box-shadow:0 0 8px #7FD6FF"></div><span class="w-1.5 h-1.5 animate-pulse bg-th-electric"></span><span class="animate-pulse font-cinzel text-xs text-green-400">LIVE</span><span class="animate-pulse font-cinzel text-xs text-th-red ethereal-glow">ALERT</span></div><p class="text-xs text-th-brass/70">animate-pulse variants</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Morph Blob</p><div class="w-20 h-20 bg-th-electric animate-morph-thor mx-auto"></div><p class="text-xs text-th-brass/70">8s border-radius morph</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Pulse Glow</p><div class="w-20 h-20 bg-th-storm rounded-full animate-pulse-glow-thor flex items-center justify-center"><iconify-icon icon="solar:bolt-circle-linear" width="28" class="text-th-cyan"></iconify-icon></div><p class="text-xs text-th-brass/70">4s box-shadow pulse</p></div>
+<div class="medieval-card p-8 flex flex-col items-center gap-4 reveal-thor" data-r><p class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70">Spin Slow</p><div class="flex items-center justify-center"><iconify-icon icon="solar:settings-linear" width="40" class="text-th-bone/50 animate-spin-slow-thor"></iconify-icon></div><p class="text-xs text-th-brass/70">12s linear infinite</p></div>
+</div>
+<!-- Text Reveal -->
+<div class="mt-16 text-center border-t border-th-brass/20 pt-16">
+<span class="font-cinzel text-[10px] uppercase tracking-[.2em] text-th-brass/70 block mb-8">Masked Text Reveal</span>
+<h2 class="text-6xl md:text-8xl font-cinzel font-bold tracking-tighter leading-none reveal-thor" data-r>
+<span class="text-reveal-wrapper"><span class="text-reveal-content text-white">Thun</span></span><span class="text-reveal-wrapper"><span class="text-reveal-content delay-200 text-transparent-stroke-brass">der</span></span>
+</h2>
+</div>
+</div>
+</section>
+
+<!-- Parallax Image Grid -->
+<section class="relative z-10 grid grid-cols-2 md:grid-cols-3 border-b border-th-brass/20 h-[300px] overflow-hidden">
+<img class="w-full h-[120%] object-cover opacity-40 border-r border-th-brass/20" style="filter:hue-rotate(180deg) saturate(0.5)" src="assets/hero-storm.png" data-speed="0.05"/>
+<img class="w-full h-[120%] object-cover opacity-40 border-r border-th-brass/20" style="filter:hue-rotate(180deg) saturate(0.5)" src="assets/hero-energy.png" data-speed="0.08"/>
+<img class="w-full h-[120%] object-cover opacity-40" style="filter:hue-rotate(180deg) saturate(0.5)" src="assets/hero-runes.png" data-speed="0.03"/>
+</section>
+</main>
+
+<!-- Floating Seal -->
+<div class="fixed bottom-8 right-8 z-50 hidden md:flex flex-col items-center bg-th-leather border-2 border-th-brass/40 p-4 rounded-sm shadow-[0_0_20px_rgba(184,134,11,0.2)]">
+  <div class="w-10 h-10 rounded-full bg-[#8B0000] border-2 border-th-electric flex items-center justify-center mb-2 shadow-[inset_0_0_10px_rgba(0,0,0,0.5)]">
+    <iconify-icon icon="solar:shield-bold" class="text-th-electric" width="20"></iconify-icon>
+  </div>
+  <span class="font-cinzel text-[10px] tracking-widest text-th-electric uppercase">Seal of Asgard</span>
+</div>
+
+<!-- Footer -->
+<footer class="relative z-10 bg-[#070b12] border-t border-th-brass/20 pt-24 pb-12">
+<div class="px-6 md:px-12 mb-24 text-center">
+<div class="reveal-thor" data-r>
+<h2 class="text-5xl md:text-7xl font-cinzel font-medium tracking-tighter mb-8 text-white uppercase">Forged in<br/>the <span class="text-transparent-stroke-brass">Storm</span>.</h2>
+<a class="medieval-corners relative inline-block border border-th-brass/30 px-8 py-4 text-lg font-cinzel text-xs uppercase tracking-[.2em] text-th-cyan hover:bg-th-electric hover:text-white transition-all duration-300" href="#">Start Building</a>
+</div>
+</div>
+<div class="medieval-ornament"><div class="medieval-ornament-center"></div></div>
+<div class="px-6 md:px-12 flex justify-between items-center">
+<div class="flex items-center gap-3"><div class="w-2 h-2 bg-th-cyan animate-pulse"></div><span class="font-cinzel text-sm tracking-[.2em] uppercase">ASGARD.CORE</span></div>
+<span class="text-xs text-th-brass/50">Runic Codex v1.0 — 2024</span>
+</div>
+<div class="mt-16 text-center opacity-[0.04] pointer-events-none select-none overflow-hidden">
+<span class="text-[10rem] md:text-[16rem] font-cinzel font-bold leading-none tracking-tighter whitespace-nowrap text-transparent-stroke-brass uppercase">THOR</span>
+</div>
+</footer>
+
+<script>
+(function(){
+var sp=document.getElementById('scroll-progress-thor');
+var els=document.querySelectorAll('[data-r]');
+var io=new IntersectionObserver(function(entries){entries.forEach(function(e){if(e.isIntersecting){e.target.classList.add('in-view');io.unobserve(e.target)}})},{threshold:.15,rootMargin:'0px 0px -10% 0px'});
+els.forEach(function(el,i){el.style.transitionDelay=(i%6)*90+'ms';io.observe(el)});
+var tick=false;
+function updateScroll(){var y=window.scrollY||0;var d=document.documentElement.scrollHeight-window.innerHeight;var p=d>0?Math.min(1,Math.max(0,y/d)):0;if(sp)sp.style.transform='scaleX('+p.toFixed(4)+')';tick=false}
+window.addEventListener('scroll',function(){if(!tick){requestAnimationFrame(updateScroll);tick=true}},{passive:true});
+updateScroll();
+document.querySelectorAll('a[href^="#"]').forEach(function(a){a.addEventListener('click',function(e){e.preventDefault();var t=document.querySelector(this.getAttribute('href'));if(t)t.scrollIntoView({behavior:'smooth'})})});
+var k=document.querySelector('.kinetic-thor');if(k)k.classList.add('in-view');
+// Carousel
+var slides=document.querySelectorAll('.carousel-slide-thor');
+var cur=0;
+if(slides.length>1){setInterval(function(){slides[cur].classList.remove('active');cur=(cur+1)%slides.length;slides[cur].classList.add('active')},5000)}
+// Text reveal
+setTimeout(function(){var t=document.querySelector('#hero h1');if(t)t.classList.add('reveal-active')},600);
+// Parallax images
+window.addEventListener('scroll',function(){var s=window.scrollY;document.querySelectorAll('[data-speed]').forEach(function(el){el.style.transform='translateY('+s*(el.dataset.speed||0.05)+'px)'})},{passive:true});
+// Shimmer animation on beam buttons
+document.querySelectorAll('.group .absolute div[style*="skewX"]').forEach(function(el){
+el.parentElement.parentElement.addEventListener('mouseenter',function(){el.style.animation='shimmer 1.5s infinite'});
+el.parentElement.parentElement.addEventListener('mouseleave',function(){el.style.animation='none'});
+});
+})();
+</script>
+</body>
+</html>
